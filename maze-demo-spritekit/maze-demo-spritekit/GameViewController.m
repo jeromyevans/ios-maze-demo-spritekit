@@ -94,9 +94,7 @@
      // invoke render on the main thread as we don't want to render within the callback block invoked by the motionManager
      ^(CMAccelerometerData *accelerometerData, NSError *error) {
          
-         [scene.packmanModel calculatePosition:accelerometerData.acceleration ];
-         
-         [scene repaintPacman ];
+         [scene applyForceToPacman:accelerometerData.acceleration ];
      }];
 
 }

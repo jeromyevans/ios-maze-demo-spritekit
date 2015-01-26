@@ -29,12 +29,15 @@
     if (!self.contentCreated) {
         
         [self createSceneContents];
-        
+        [self startGame];
         self.contentCreated = true;
     }
     
 }
 
+/**
+ Setup the scene sprites and animation
+ */
 -(void)createSceneContents {
     
     self.backgroundColor = [SKColor blackColor];
@@ -66,8 +69,16 @@
     
     [self addChild:self.pacmanSprite];
     
-    self.packmanModel = [[PacmanModel alloc] init];
+}
 
+
+/** Setup inputs */
+-(void)startGame
+{
+    CMAcceleration acceleration;
+    acceleration.x=0.1;
+    
+    [self applyForceToPacman:acceleration];
 }
 
 -(void)createLabel:(SKView*) skView
@@ -108,7 +119,6 @@
     physicsBody.affectedByGravity = false;
     physicsBody.mass = 0.2;
     
-    
     self.pacmanSprite.physicsBody = physicsBody;
 }
 
@@ -116,9 +126,9 @@
  Update the position and rotation of the pacman.
  Note using animation to change the position.  That probably would be better
  */
--(void)repaintPacman
+-(void)applyForceToPacman:(CMAcceleration) acceleration;
 {
-    self.pacmanSprite.position = CGPointMake(self.packmanModel.currentPoint.x, self.packmanModel.currentPoint.y);
+    [self.pacmanSprite.physicsBody applyImpulse: CGVectorMake(acceleration.x*100.0, acceleration.y*100.0)];
     
 }
 
@@ -176,19 +186,18 @@
     /* Called when a touch begins */
     
     for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
+        CGPoint touchLocation = [touch locationInNode:self];
+        CGPoint pacmanPosition = self.pacmanSprite.position;
         
-        SKSpriteNode *pacmanSprite = [SKSpriteNode spriteNodeWithImageNamed:@"pacman"];
+        CGFloat dx = pacmanPosition.x - touchLocation.x;
+        CGFloat dy = pacmanPosition.y - touchLocation.y;
         
-        pacmanSprite.xScale = 0.5;
-        pacmanSprite.yScale = 0.5;
-        pacmanSprite.position = location;
+        CMAcceleration acceleration;
+        acceleration.x = dx / 500.0;
+        acceleration.y = dy / 500.0;
         
-        SKAction *action = [SKAction rotateByAngle:M_PI duration:1];
-        
-        [pacmanSprite runAction:[SKAction repeatActionForever:action]];
-        
-        [self addChild:pacmanSprite];
+        [self applyForceToPacman: acceleration];
+       
     }
 }
 
