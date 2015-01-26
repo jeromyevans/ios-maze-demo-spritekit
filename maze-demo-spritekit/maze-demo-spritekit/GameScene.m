@@ -18,6 +18,8 @@
 @property SKSpriteNode* ghost2Sprite;
 @property SKSpriteNode* ghost3Sprite;
 
+@property SKSpriteNode* exitSprite;
+
 @end
 
 @implementation GameScene
@@ -63,9 +65,15 @@
     CGFloat sceneWidth = self.view.bounds.size.width;
     CGFloat sceneHeight = self.view.bounds.size.height;
     
-    self.ghost1Sprite = [self createGhost:CGPointMake(sceneWidth/4.0,0.0)];
+    SKSpriteNode* wall4Sprite  = (SKSpriteNode*)[self.scene childNodeWithName:@"wall4"];
+    SKSpriteNode* wall8Sprite  = (SKSpriteNode*)[self.scene childNodeWithName:@"wall8"];
+
+    
+    self.ghost1Sprite = [self createGhost:CGPointMake(wall4Sprite.position.x, 0.0)];
     self.ghost2Sprite = [self createGhost:CGPointMake(sceneWidth/2.0, sceneHeight)];
-    self.ghost3Sprite = [self createGhost:CGPointMake(3*sceneWidth/4.0, 0.0)];
+    self.ghost3Sprite = [self createGhost:CGPointMake(wall8Sprite.position.x, sceneHeight)];
+    
+    self.exitSprite = (SKSpriteNode*)[self.scene childNodeWithName:@"exit"];
     
     [self addChild:self.ghost1Sprite];
     [self addChild:self.ghost2Sprite];
