@@ -41,24 +41,10 @@
 
     SKView* skView = (SKView *)self.view;
 
-    /* Setup your scene here */
-    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    // setup an edge loop (boundary)
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:skView.bounds];
     
-    NSMutableString *labelText = [NSMutableString stringWithFormat:@"%f", skView.bounds.size.width];
-    [ labelText appendString:@"x"];
-    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", skView.bounds.size.height]];
-    [ labelText appendString:@","];
-    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", self.frame.size.width]];
-    [ labelText appendString:@"x"];
-    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", self.frame.size.height]];
-    
-    myLabel.text =     labelText;
-    myLabel.fontSize = 32;
-
-    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
-                                   CGRectGetMidY(self.frame));
-    
-//    [self addChild:myLabel];
+//    [self createLabel:skView];
     
     [self createPacman];
 
@@ -67,7 +53,6 @@
     
     SKSpriteNode* wall4Sprite  = (SKSpriteNode*)[self.scene childNodeWithName:@"wall4"];
     SKSpriteNode* wall8Sprite  = (SKSpriteNode*)[self.scene childNodeWithName:@"wall8"];
-
     
     self.ghost1Sprite = [self createGhost:CGPointMake(wall4Sprite.position.x, 0.0)];
     self.ghost2Sprite = [self createGhost:CGPointMake(sceneWidth/2.0, sceneHeight)];
@@ -80,8 +65,35 @@
     [self addChild:self.ghost3Sprite];
     
     [self addChild:self.pacmanSprite];
+    
+    self.packmanModel = [[PacmanModel alloc] init];
+
 }
 
+-(void)createLabel:(SKView*) skView
+{
+    SKLabelNode *myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    
+    NSMutableString *labelText = [NSMutableString stringWithFormat:@"%f", skView.bounds.size.width];
+    [ labelText appendString:@"x"];
+    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", skView.bounds.size.height]];
+    [ labelText appendString:@","];
+    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", self.frame.size.width]];
+    [ labelText appendString:@"x"];
+    [ labelText appendString:[NSMutableString stringWithFormat:@"%f", self.frame.size.height]];
+    
+    myLabel.text =     labelText;
+    myLabel.fontSize = 32;
+    
+    myLabel.position = CGPointMake(CGRectGetMidX(self.frame),
+                                   CGRectGetMidY(self.frame));
+    
+    //    [self addChild:myLabel];
+}
+
+/**
+ Prepare the pacman. Setup the phsicals model so he has some mass
+ */
 -(void)createPacman
 {
     
@@ -90,6 +102,23 @@
     self.pacmanSprite.xScale = 1;
     self.pacmanSprite.yScale = 1;
     self.pacmanSprite.position = CGPointMake(self.pacmanSprite.size.width/2, CGRectGetMidY(self.frame)); // left edge centre
+    
+    SKPhysicsBody* physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: self.pacmanSprite.frame.size];
+    physicsBody.dynamic = true;
+    physicsBody.affectedByGravity = false;
+    physicsBody.mass = 0.2;
+    
+    
+    self.pacmanSprite.physicsBody = physicsBody;
+}
+
+/**
+ Update the position and rotation of the pacman.
+ Note using animation to change the position.  That probably would be better
+ */
+-(void)repaintPacman
+{
+    self.pacmanSprite.position = CGPointMake(self.packmanModel.currentPoint.x, self.packmanModel.currentPoint.y);
     
 }
 
@@ -128,6 +157,15 @@
     }
     
     SKAction *repeatedSequence = [SKAction repeatActionForever:sequence];
+    
+    
+    SKPhysicsBody* physicsBody = [SKPhysicsBody bodyWithRectangleOfSize: ghostSprite.frame.size];
+    physicsBody.dynamic = true;
+    physicsBody.affectedByGravity = false;
+    physicsBody.mass = 0.2;
+    
+    ghostSprite.physicsBody = physicsBody;
+    
     
     [ghostSprite runAction: repeatedSequence];
     

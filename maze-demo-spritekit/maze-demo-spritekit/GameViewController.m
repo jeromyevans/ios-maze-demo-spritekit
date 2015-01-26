@@ -6,8 +6,17 @@
 //  Copyright (c) 2015 __MyCompanyName__. All rights reserved.
 //
 
+#import <CoreMotion/CoreMotion.h>
+
 #import "GameViewController.h"
 #import "GameScene.h"
+
+@interface GameViewController ()
+
+@property (strong, nonatomic) CMMotionManager  *motionManager;
+@property (strong, nonatomic) NSOperationQueue *queue;
+
+@end
 
 @implementation SKScene (Unarchive)
 
@@ -33,7 +42,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
 }
 
 /**
@@ -63,9 +71,33 @@
         scene.size = skView.bounds.size;
         scene.scaleMode = SKSceneScaleModeAspectFill;  // simply stretches
         
+        [self setupAccelerometer:scene];
+        
         // Present the scene.
         [skView presentScene:scene];
     }
+
+}
+
+/**
+ Setup a callback on the motionManager to queue accelerometer inputs and recalculate the 
+ position of the pacman
+ */
+- (void)setupAccelerometer:(GameScene*) scene {
+    self.motionManager = [[CMMotionManager alloc]  init];
+    self.queue         = [[NSOperationQueue alloc] init];
+    
+    self.motionManager.accelerometerUpdateInterval = ACCELEROMETER_READ_INTERVAL;
+    
+    [self.motionManager startAccelerometerUpdatesToQueue:self.queue withHandler:
+     // invoke calculatePosition() with latest acceleration to recalculate position
+     // invoke render on the main thread as we don't want to render within the callback block invoked by the motionManager
+     ^(CMAccelerometerData *accelerometerData, NSError *error) {
+         
+         [scene.packmanModel calculatePosition:accelerometerData.acceleration ];
+         
+         [scene repaintPacman ];
+     }];
 
 }
 

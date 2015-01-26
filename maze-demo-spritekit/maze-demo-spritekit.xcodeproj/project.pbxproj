@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7AC006A11A75FA7600F2C4CD /* pacman.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AC0069F1A75FA7600F2C4CD /* pacman.m */; };
+		7AC006A31A75FC5600F2C4CD /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AC006A21A75FC5600F2C4CD /* CoreMotion.framework */; };
 		7AF6A4CF1A74C860003C56A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6A4CE1A74C860003C56A6 /* main.m */; };
 		7AF6A4D21A74C860003C56A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6A4D11A74C860003C56A6 /* AppDelegate.m */; };
 		7AF6A4D51A74C860003C56A6 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AF6A4D41A74C860003C56A6 /* GameScene.m */; };
@@ -29,6 +31,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7AC0069F1A75FA7600F2C4CD /* pacman.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = pacman.m; sourceTree = "<group>"; };
+		7AC006A01A75FA7600F2C4CD /* pacman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pacman.h; sourceTree = "<group>"; };
+		7AC006A21A75FC5600F2C4CD /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		7AF6A4C91A74C860003C56A6 /* maze-demo-spritekit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maze-demo-spritekit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AF6A4CD1A74C860003C56A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7AF6A4CE1A74C860003C56A6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -52,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AC006A31A75FC5600F2C4CD /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +74,7 @@
 		7AF6A4C01A74C860003C56A6 = {
 			isa = PBXGroup;
 			children = (
+				7AC006A21A75FC5600F2C4CD /* CoreMotion.framework */,
 				7AF6A4CB1A74C860003C56A6 /* maze-demo-spritekit */,
 				7AF6A4EA1A74C860003C56A6 /* maze-demo-spritekitTests */,
 				7AF6A4CA1A74C860003C56A6 /* Products */,
@@ -93,6 +100,8 @@
 				7AF6A4D61A74C860003C56A6 /* GameScene.sks */,
 				7AF6A4D81A74C860003C56A6 /* GameViewController.h */,
 				7AF6A4D91A74C860003C56A6 /* GameViewController.m */,
+				7AC0069F1A75FA7600F2C4CD /* pacman.m */,
+				7AC006A01A75FA7600F2C4CD /* pacman.h */,
 				7AF6A4FF1A74D315003C56A6 /* Images.xcassets */,
 				7AF6A4DB1A74C860003C56A6 /* Main.storyboard */,
 				7AF6A4E01A74C860003C56A6 /* LaunchScreen.xib */,
@@ -229,6 +238,7 @@
 			files = (
 				7AF6A4DA1A74C860003C56A6 /* GameViewController.m in Sources */,
 				7AF6A4D21A74C860003C56A6 /* AppDelegate.m in Sources */,
+				7AC006A11A75FA7600F2C4CD /* pacman.m in Sources */,
 				7AF6A4D51A74C860003C56A6 /* GameScene.m in Sources */,
 				7AF6A4CF1A74C860003C56A6 /* main.m in Sources */,
 			);

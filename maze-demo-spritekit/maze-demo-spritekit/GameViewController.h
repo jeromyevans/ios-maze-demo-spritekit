@@ -11,4 +11,7 @@
 
 @interface GameViewController : UIViewController
 
+// interval at which accelerometer data is read
+#define ACCELEROMETER_READ_INTERVAL (1.0f / 60.0f)
+
 @end
