@@ -148,7 +148,12 @@ const uint32_t EDGE_COLLISION_MASK =    0x10;
  */
 -(void)applyForceToPacman:(CMAcceleration) acceleration;
 {
-    [self.pacmanSprite.physicsBody applyImpulse: CGVectorMake(acceleration.x*100.0, acceleration.y*100.0)];
+//    [self.pacmanSprite.physicsBody applyImpulse: CGVectorMake(acceleration.x*100.0, acceleration.y*100.0)];
+    // y and z are used becayse the device is rotated 90 degrees
+    [self.pacmanSprite.physicsBody applyImpulse: CGVectorMake(-acceleration.y*2, -acceleration.z*2)];
+    
+    // todo: I'm actually interested in roration around the xaxis (reported by gyro), and
+    // data from the accelometer only from y axis. ie rotation for steering, accel for accel/decel
     
 }
 
